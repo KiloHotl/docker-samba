@@ -1,16 +1,12 @@
-ARG SAMBA_VERSION=4.15.7
-
-FROM alpine:3.16
+FROM alpine:latest
 
 ENV TZ="UTC"
 
-ARG SAMBA_VERSION
-ARG SAMBA_RELEASE
 RUN apk --update --no-cache add \
     bash \
     coreutils \
     jq \
-    samba=${SAMBA_VERSION}-r0 \
+    samba \
     shadow \
     tzdata \
     yq \
@@ -18,7 +14,7 @@ RUN apk --update --no-cache add \
 
 COPY entrypoint.sh /entrypoint.sh
 
-EXPOSE 445
+EXPOSE 445/tcp 139/tcp 137/udp 138/udp
 
 VOLUME [ "/data" ]
 
